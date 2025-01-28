@@ -1,0 +1,37 @@
+{
+    "type": "gachamachine:gacha_machine",
+    "pools": [
+        {
+            "conditions": [],
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "gachamachine:basic_capsule",
+                    "weight": 45
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "gachamachine:copper_capsule",
+                    "weight": 25
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "gachamachine:iron_capsule",
+                    "weight": 15
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "gachamachine:diamond_capsule",
+                    "weight": 10
+                },
+                {
+                    "type": "minecraft:item",
+                    "name": "gachamachine:netherite_capsule",
+                    "weight": 5
+                }
+            ],
+            "bonus_rolls": 0,
+            "rolls": 1
+        }
+    ]
+}

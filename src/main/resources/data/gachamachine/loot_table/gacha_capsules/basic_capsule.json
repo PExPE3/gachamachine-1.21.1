@@ -1,0 +1,49 @@
+{
+  "type": "gachamachine:capsule",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "minecraft:armor_stand" },
+        { "type": "minecraft:item", "name": "minecraft:bell" },
+        { "type": "minecraft:item", "name": "minecraft:beetroot_soup", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:book", "functions": [{ "function": "set_count", "count": 5 }] },
+        { "type": "minecraft:item", "name": "minecraft:bread", "functions": [{ "function": "set_count", "count": 5 }] },
+        { "type": "minecraft:item", "name": "minecraft:chicken", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:clock" },
+        { "type": "minecraft:item", "name": "minecraft:cobweb", "functions": [{ "function": "set_count", "count": 5 }] },
+        { "type": "minecraft:item", "name": "minecraft:copper_block" },
+        { "type": "minecraft:item", "name": "minecraft:copper_ingot", "functions": [{ "function": "set_count", "count": 10 }] },
+        { "type": "minecraft:item", "name": "minecraft:cookie", "functions": [{ "function": "set_count", "count": 5 }] },
+        { "type": "minecraft:item", "name": "minecraft:cooked_chicken", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:cooked_cod", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:cooked_mutton", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:cooked_porkchop", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:cooked_rabbit", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:cooked_salmon", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:copper_block" },
+        { "type": "minecraft:item", "name": "minecraft:map", "functions": [{ "function": "set_count", "count": 2 }] },
+        { "type": "minecraft:item", "name": "minecraft:firework_rocket", "functions": [{ "function": "set_count", "count": 5 }] },
+        { "type": "minecraft:item", "name": "minecraft:flint_and_steel" },
+        { "type": "minecraft:item", "name": "minecraft:glow_ink_sac", "functions": [{ "function": "set_count", "count": 5 }] },
+        { "type": "minecraft:item", "name": "minecraft:gold_nugget", "functions": [{ "function": "set_count", "count": 20 }] },
+        { "type": "minecraft:item", "name": "minecraft:honey_bottle", "functions": [{ "function": "set_count", "count": 5 }] },
+        { "type": "minecraft:item", "name": "minecraft:honeycomb", "functions": [{ "function": "set_count", "count": 5 }] },
+        { "type": "minecraft:item", "name": "minecraft:iron_nugget", "functions": [{ "function": "set_count", "count": 20 }] },
+        { "type": "minecraft:item", "name": "minecraft:lead", "functions": [{ "function": "set_count", "count": 2 }] },
+        { "type": "minecraft:item", "name": "minecraft:melon_slice", "functions": [{ "function": "set_count", "count": 10 }] },
+        { "type": "minecraft:item", "name": "minecraft:mushroom_stew", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:pufferfish" },
+        { "type": "minecraft:item", "name": "minecraft:redstone_block" },
+        { "type": "minecraft:item", "name": "minecraft:redstone", "functions": [{ "function": "set_count", "count": 20 }] },
+        { "type": "minecraft:item", "name": "minecraft:turtle_scute", "functions": [{ "function": "set_count", "count": 5 }] },
+        { "type": "minecraft:item", "name": "minecraft:shield" },
+        { "type": "minecraft:item", "name": "minecraft:slime_ball", "functions": [{ "function": "set_count", "count": 5 }] },
+        { "type": "minecraft:item", "name": "minecraft:cooked_beef", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:turtle_helmet", "functions": [{ "function": "set_count", "count": 5 }] }
+      ]
+    }
+  ],
+  "random_sequences": "gachamachine:gacha_capsules"
+}
+

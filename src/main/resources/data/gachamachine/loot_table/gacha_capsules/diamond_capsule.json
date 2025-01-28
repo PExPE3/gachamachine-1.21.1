@@ -1,0 +1,43 @@
+{
+  "type": "gachamachine:capsule",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "minecraft:experience_bottle", "functions": [{ "function": "set_count", "count": 20 }] },
+        { "type": "minecraft:item", "name": "minecraft:diamond_axe" },
+        { "type": "minecraft:item", "name": "minecraft:diamond_hoe" },
+        { "type": "minecraft:item", "name": "minecraft:diamond_pickaxe" },
+        { "type": "minecraft:item", "name": "minecraft:diamond_shovel" },
+        { "type": "minecraft:item", "name": "minecraft:diamond_sword" },
+        { "type": "minecraft:item", "name": "minecraft:diamond_boots" },
+        { "type": "minecraft:item", "name": "minecraft:diamond_chestplate" },
+        { "type": "minecraft:item", "name": "minecraft:diamond_helmet" },
+        { "type": "minecraft:item", "name": "minecraft:diamond_leggings" },
+        { "type": "minecraft:item", "name": "minecraft:diamond_horse_armor" },
+        { "type": "minecraft:item", "name": "minecraft:diamond", "functions": [{ "function": "set_count", "count": 10 }] },
+        { "type": "minecraft:item", "name": "minecraft:dragon_egg" },
+        { "type": "minecraft:item", "name": "minecraft:dragon_head" },
+        { "type": "minecraft:item", "name": "minecraft:dragon_breath", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:elytra" },
+        { "type": "minecraft:item", "name": "minecraft:ender_pearl", "functions": [{ "function": "set_count", "count": 15 }] },
+        { "type": "minecraft:item", "name": "minecraft:enchanted_golden_apple", "functions": [{ "function": "set_count", "count": 2 }] },
+        { "type": "minecraft:item", "name": "minecraft:ghast_tear", "functions": [{ "function": "set_count", "count": 15 }] },
+        { "type": "minecraft:item", "name": "minecraft:glistering_melon_slice", "functions": [{ "function": "set_count", "count": 20 }] },
+        { "type": "minecraft:item", "name": "minecraft:golden_carrot", "functions": [{ "function": "set_count", "count": 10 }] },
+        { "type": "minecraft:item", "name": "minecraft:heart_of_the_sea", "functions": [{ "function": "set_count", "count": 2 }] },
+        { "type": "minecraft:item", "name": "minecraft:name_tag", "functions": [{ "function": "set_count", "count": 4 }] },
+        { "type": "minecraft:item", "name": "minecraft:nether_star" },
+        { "type": "minecraft:item", "name": "minecraft:netherite_ingot", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:recovery_compass", "functions": [{ "function": "set_count", "count": 3 }] },
+        { "type": "minecraft:item", "name": "minecraft:saddle", "functions": [{ "function": "set_count", "count": 4 }] },
+        { "type": "minecraft:item", "name": "minecraft:shulker_box", "functions": [{ "function": "set_count", "count": 2 }] },
+        { "type": "minecraft:item", "name": "minecraft:shulker_shell", "functions": [{ "function": "set_count", "count": 15 }] },
+        { "type": "minecraft:item", "name": "minecraft:tnt", "functions": [{ "function": "set_count", "count": 15 }] },
+        { "type": "minecraft:item", "name": "minecraft:trident" },
+        { "type": "minecraft:item", "name": "minecraft:wither_rose", "functions": [{ "function": "set_count", "count": 5 }] }
+      ]
+    }
+  ],
+    "random_sequences": "gachamachine:gacha_capsules"
+}

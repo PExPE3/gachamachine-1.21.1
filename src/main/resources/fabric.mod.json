@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "gachamachine",
+	"version": "${version}",
+	"name": "GachaMachine",
+	"description": "Mod with a gacha machine",
+	"authors": [
+		"hisroyalty, DogtorBloo"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC-BY-NC-SA-4.0",
+	"icon": "assets/gachamachine/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.hisroyalty.GachaMachine"
+		],
+		"client": [
+			"com.hisroyalty.GachaMachineClient"
+		],
+		"fabric-datagen": [
+			"com.hisroyalty.GachaMachineDataGenerator"
+		]
+	},
+	"mixins": [
+		"gachamachine.mixins.json",
+		{
+			"config": "gachamachine.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

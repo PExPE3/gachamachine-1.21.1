@@ -1,0 +1,22 @@
+{
+    "itemGroup.gacha_machines":  "Gacha Machines",
+    "block.gachamachine.gacha_machine": "Gacha Machine",
+    "item.gachamachine.basic_capsule": "Basic Capsule",
+    "item.gachamachine.red_capsule": "Red Capsule",
+    "item.gachamachine.green_capsule": "Green Capsule",
+    "item.gachamachine.yellow_capsule": "Yellow Capsule",
+    "item.gachamachine.iron_capsule": "Iron Capsule",
+    "item.gachamachine.gold_capsule": "Gold Capsule",
+    "item.gachamachine.diamond_capsule": "Diamond Capsule",
+    "item.gachamachine.emerald_capsule": "Emerald Capsule",
+    "item.gachamachine.netherite_capsule": "Netherite Capsule",
+    "item.gachamachine.copper_capsule": "Copper Capsule",
+    "item.gachamachine.diamond_capsule_alt": "Diamond Capsule Alt",
+    "item.gachamachine.copper_capsule_alt": "Copper Capsule Alt",
+    "item.gachamachine.netherite_capsule_alt": "Netherite Capsule Alt",
+    "item.gachamachine.gold_capsule_alt": "Gold Capsule Alt",
+    "item.gachamachine.emerald_capsule_alt": "Emerald Capsule Alt",
+    "item.gachamachine.iron_capsule_alt": "Iron Capsule Alt",
+
+    "message.gacha_machine.invalid_currency": "Invalid currency inserted. Needs: %s"
+}
