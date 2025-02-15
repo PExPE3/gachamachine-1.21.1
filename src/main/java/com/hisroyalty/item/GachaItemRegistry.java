@@ -158,14 +158,6 @@ public class GachaItemRegistry {
 
 
 
-
-
-    // red green yellow
-    public static final CapsuleItem RED_CAPSULE = register("red_capsule", new CapsuleItem(new Item.Settings()));
-    public static final CapsuleItem GREEN_CAPSULE = register("green_capsule", new CapsuleItem(new Item.Settings()));
-    public static final CapsuleItem YELLOW_CAPSULE = register("yellow_capsule", new CapsuleItem(new Item.Settings()));
-
-
     public static <T extends Item> T register(String id, T item) {
         return Registry.register(Registries.ITEM, Identifier.of("gachamachine", id), item);
     }

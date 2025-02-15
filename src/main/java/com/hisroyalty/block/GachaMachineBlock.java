@@ -3,14 +3,9 @@ package com.hisroyalty.block;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.hisroyalty.GachaMachine;
-import com.hisroyalty.ModTags;
-import com.hisroyalty.item.GachaItemRegistry;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.MapCodec;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -21,9 +16,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTables;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.registry.Registries;
@@ -49,14 +42,10 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 
 import static com.hisroyalty.GachaMachine.*;
 
@@ -198,7 +187,7 @@ public class GachaMachineBlock extends BlockWithEntity {
         }
 
 
-        if (!isValidItem(stack)) {;
+        if (!isValidItem(stack)) {
             StringBuilder itemNames = new StringBuilder();
 
             for (RegistryEntry<Item> itemRegistryEntry : Registries.ITEM.getOrCreateEntryList(currencyTag)) {

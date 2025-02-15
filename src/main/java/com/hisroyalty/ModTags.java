@@ -3,7 +3,6 @@ package com.hisroyalty;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 
 import static com.hisroyalty.GachaMachine.id;
 
