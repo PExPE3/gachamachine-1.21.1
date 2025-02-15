@@ -2,6 +2,7 @@ package com.hisroyalty.item.custom;
 
 import com.hisroyalty.GachaMachine;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -21,8 +24,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.hisroyalty.GachaMachine.MOD_ID;
 
 public class CapsuleItem extends Item {
     private Identifier lootTableId;
@@ -46,7 +49,12 @@ public class CapsuleItem extends Item {
             }
         }
 
+
+        world.playSound(null, user.getBlockPos(), SoundEvents.BLOCK_SNIFFER_EGG_PLOP,
+                SoundCategory.PLAYERS, 2f, 1f);
+
         return TypedActionResult.consume(resultStack);
+
     }
 
 

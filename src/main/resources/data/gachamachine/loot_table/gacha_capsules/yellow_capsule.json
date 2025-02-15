@@ -1,0 +1,15 @@
+{
+  "type": "gachamachine:capsule",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "minecraft:armor_stand" },
+        { "type": "minecraft:item", "name": "minecraft:bell" },
+        { "type": "minecraft:item", "name": "minecraft:xyz", "functions": [{ "function": "set_count", "count": 3 }] }
+      ]
+    }
+  ],
+  "random_sequences": "gachamachine:gacha_capsules"
+}
+

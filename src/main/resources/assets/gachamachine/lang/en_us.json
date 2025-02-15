@@ -11,12 +11,9 @@
     "item.gachamachine.emerald_capsule": "Emerald Capsule",
     "item.gachamachine.netherite_capsule": "Netherite Capsule",
     "item.gachamachine.copper_capsule": "Copper Capsule",
-    "item.gachamachine.diamond_capsule_alt": "Diamond Capsule Alt",
-    "item.gachamachine.copper_capsule_alt": "Copper Capsule Alt",
-    "item.gachamachine.netherite_capsule_alt": "Netherite Capsule Alt",
-    "item.gachamachine.gold_capsule_alt": "Gold Capsule Alt",
-    "item.gachamachine.emerald_capsule_alt": "Emerald Capsule Alt",
-    "item.gachamachine.iron_capsule_alt": "Iron Capsule Alt",
-
+    "item.gachamachine.lapis_capsule": "Lapis Capsule",
+    "item.gachamachine.stone_capsule": "Stone Capsule",
+    "item.gachamachine.wooden_capsule": "Wooden Capsule",
+    "item.gachamachine.gacha_coin": "Gacha Coin",
     "message.gacha_machine.invalid_currency": "Invalid currency inserted. Needs: %s"
 }

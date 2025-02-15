@@ -2,17 +2,18 @@
 	"schemaVersion": 1,
 	"id": "gachamachine",
 	"version": "${version}",
-	"name": "GachaMachine",
-	"description": "Mod with a gacha machine",
+	"name": "Bloo's Gacha Machine",
+	"description": "Exchange coins for capsules and experience gacha pulls in Minecraft!",
 	"authors": [
 		"hisroyalty, DogtorBloo"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://curseforge.com/minecraft/mc-mods/bloos-gacha-machine",
+		"sources": "https://github.com/hisRoyalty/gachamachine-1.21.1",
+		"issues": "https://github.com/hisRoyalty/gachamachine-1.21.1/issues"
 	},
 	"license": "CC-BY-NC-SA-4.0",
-	"icon": "assets/gachamachine/icon.png",
+	"icon": "icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
@@ -20,9 +21,6 @@
 		],
 		"client": [
 			"com.hisroyalty.GachaMachineClient"
-		],
-		"fabric-datagen": [
-			"com.hisroyalty.GachaMachineDataGenerator"
 		]
 	},
 	"mixins": [
@@ -37,8 +35,5 @@
 		"minecraft": "~1.21.1",
 		"java": ">=21",
 		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }

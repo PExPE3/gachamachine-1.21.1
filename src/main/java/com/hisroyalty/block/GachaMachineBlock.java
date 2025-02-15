@@ -1,6 +1,7 @@
 package com.hisroyalty.block;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.hisroyalty.GachaMachine;
 import com.hisroyalty.ModTags;
@@ -8,16 +9,15 @@ import com.hisroyalty.item.GachaItemRegistry;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -26,22 +26,18 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.loot.context.LootContextType;
-import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.resource.ResourcePackManager;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
@@ -56,65 +52,86 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
-import static com.hisroyalty.GachaMachine.GACHA_MACHINE_LOOT_CONTEXT;
-import static com.hisroyalty.GachaMachine.MOD_ID;
+import static com.hisroyalty.GachaMachine.*;
 
-public class GachaMachineBlock extends Block {
-    public static final IntProperty LEVEL_X = IntProperty.of("level", 0, deserializeLevel());
-    public static final IntProperty LEVEL = LEVEL_X;
+public class GachaMachineBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
+    private final TagKey<Item> currencyTag;
+    private final String loot;
+    private final int configProperty;
 
-
-    public GachaMachineBlock(Settings settings) {
+    public GachaMachineBlock(Settings settings, TagKey<Item> currencyTag, String loot, int configProperty) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(LEVEL, 0).with(FACING, Direction.NORTH).with(HALF, DoubleBlockHalf.LOWER));
+        this.currencyTag = currencyTag;
+        this.loot = loot;
+        this.configProperty = configProperty;
     }
+
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(LEVEL);
         builder.add(FACING);
         builder.add(HALF);
 
     }
 
-    @Nullable
+
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+    public @Nullable BlockState getPlacementState(ItemPlacementContext ctx) {
+        return getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite()).with(HALF, DoubleBlockHalf.LOWER);
     }
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (state.getOrEmpty(HALF).orElse(null) == DoubleBlockHalf.UPPER) return;
-        super.onStateReplaced(state, world, pos, newState, moved);
+        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
+            return;
+        }
+
+        if (!state.isOf(newState.getBlock())) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof GachaMachineBlockEntity) {
+                world.updateComparators(pos, this);
+            }
+            super.onStateReplaced(state, world, pos, newState, moved);
+        }
     }
 
 
-    private static int deserializeLevel() {
-        File configDir = FabricLoader.getInstance().getConfigDir().toFile();
-        File configFile = new File(configDir, "gachamachine/config.json");
-        if (!configFile.exists()) {
-            System.err.println("Config file not found: " + configFile.getAbsolutePath());
+
+
+
+
+
+    public static int deserializeLevel(int index) {
+        if (Files.notExists(CONFIG_FILE)) {
+            System.err.println("Config file not found: " + CONFIG_FILE);
+            return DEFAULT_MAX_LEVELS;
         }
-        try (FileReader reader = new FileReader(configFile)) {
-            JsonElement jsonElement = JsonParser.parseReader(reader);
-            DataResult<Integer> result = Codec.INT.parse(JsonOps.INSTANCE, jsonElement);
-
-            Integer value = result.resultOrPartial(System.err::println).orElse(3);
-            return value;
-
+        try {
+            String content = Files.readString(CONFIG_FILE);
+            JsonElement jsonElement = JsonParser.parseString(content);
+            if (jsonElement.isJsonObject()) {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                String key = "maximum_currency_amount_" + index;
+                if (jsonObject.has(key)) {
+                    DataResult<Integer> result = Codec.INT.parse(com.mojang.serialization.JsonOps.INSTANCE, jsonObject.get(key));
+                    return result.resultOrPartial(System.err::println).orElse(DEFAULT_MAX_LEVELS);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return 3;
-
+        return DEFAULT_MAX_LEVELS;
     }
+
+
 
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
@@ -125,17 +142,29 @@ public class GachaMachineBlock extends Block {
     @Override
     protected List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
         if (state.get(HALF) == DoubleBlockHalf.UPPER) {
-            return Collections.emptyList();
+                return Collections.emptyList();
         }
         return super.getDroppedStacks(state, builder);
     }
 
+
+
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (!world.isClient())
-            world.setBlockState(pos.up(), this.getDefaultState().with(HALF, DoubleBlockHalf.UPPER).with(FACING, state.get(FACING)));
+        if (!world.isClient()) {
+            world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER), 3);
+        }
         super.onPlaced(world, pos, state, placer, itemStack);
     }
+
+
+//    @Override
+//    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+//        if (!world.isClient())
+//            world.setBlockState(pos.up(), this.getDefaultState().with(HALF, DoubleBlockHalf.UPPER).with(FACING, state.get(FACING)));
+//        super.onPlaced(world, pos, state, placer, itemStack);
+//    }
+
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
@@ -154,15 +183,22 @@ public class GachaMachineBlock extends Block {
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
+
     private boolean isValidItem(ItemStack stack) {
-        return stack.isIn(ModTags.Items.CURRENCY_ITEMS);
+        return stack.isIn(currencyTag);
     }
 
     @Override
     protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
+            pos = pos.down();
+        }
+        if (!(world.getBlockEntity(pos) instanceof GachaMachineBlockEntity gachaMachineBlockEntity)) {
+            return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+        }
 
-        if (!isValidItem(stack)) {
-            TagKey<Item> currencyTag = ModTags.Items.CURRENCY_ITEMS;
+
+        if (!isValidItem(stack)) {;
             StringBuilder itemNames = new StringBuilder();
 
             for (RegistryEntry<Item> itemRegistryEntry : Registries.ITEM.getOrCreateEntryList(currencyTag)) {
@@ -174,28 +210,26 @@ public class GachaMachineBlock extends Block {
                 itemNames.setLength(itemNames.length() - 2);
             }
 
+
             Text message = Text.translatable("message.gacha_machine.invalid_currency",
                     Text.literal(itemNames.toString()).styled(style -> style.withColor(Formatting.RED))
             ).styled(style -> style.withColor(Formatting.RED));
 
-            if (message.getString().length() <= 128) {
-                player.sendMessage(message, true);
-            } else {
-                player.sendMessage(message, false);
-            }
+            player.sendMessage(message, message.getString().length() <= 128);
 
             return ItemActionResult.FAIL;
         }
 
         if (isValidItem(stack)) {
-            int currentLevel = state.get(LEVEL);
+            int currentLevel = gachaMachineBlockEntity.getLevel();
 
-            if (currentLevel < (deserializeLevel() - 1)) {
-                updateLevel(world, pos, state, currentLevel + 1);
+            if (currentLevel < (deserializeLevel(configProperty) - 1)) {
+                // updateLevel(world, pos, state, currentLevel + 1);
+                gachaMachineBlockEntity.setLevel(currentLevel + 1);
 
 
-                Text text = Text.literal("[").append(Text.of(String.valueOf(currentLevel+1))).append(Text.of("/")).append(Text.of(String.valueOf(deserializeLevel()))).append(Text.of("]"));
-                player.sendMessage(text, true);
+                Text text = Text.literal("[").append(Text.of(String.valueOf(currentLevel+1))).append(Text.of("/")).append(Text.of(String.valueOf(deserializeLevel(configProperty)))).append(Text.of("]"));
+                if (!world.isClient()) player.sendMessage(text, true);
 
 
 
@@ -204,8 +238,9 @@ public class GachaMachineBlock extends Block {
                     stack.decrement(1);
                 }
 
+                SoundEvent soundEvent = SoundEvents.BLOCK_CHAIN_STEP;
 
-                world.playSound(null, pos, SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                world.playSound(null, pos, soundEvent, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
                 return ItemActionResult.SUCCESS;
             } else {
@@ -236,7 +271,7 @@ public class GachaMachineBlock extends Block {
                     );
 
                     world.spawnEntity(capsuleEntity);
-                    updateLevel(world, pos, state, 0);
+                    gachaMachineBlockEntity.setLevel(0);
 
                     world.playSound(null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 }
@@ -255,7 +290,10 @@ public class GachaMachineBlock extends Block {
 
     @Override
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-        return state.get(LEVEL);
+        if (world.getBlockEntity(pos) instanceof GachaMachineBlockEntity gachaMachineBlockEntity) {
+            return gachaMachineBlockEntity.getLevel();
+        }
+        return 0;
     }
 
     public ItemStack getOutput(PlayerEntity player) {
@@ -275,7 +313,7 @@ public class GachaMachineBlock extends Block {
                 .add(LootContextParameters.THIS_ENTITY, player)
                 .build(GACHA_MACHINE_LOOT_CONTEXT);
 
-        Identifier lootTableId = Identifier.of(MOD_ID, "gacha_machine");
+        Identifier lootTableId = Identifier.of(MOD_ID, loot);
         LootTable lootTable = serverWorld.getServer()
                 .getReloadableRegistries()
                 .getLootTable(RegistryKey.of(RegistryKeys.LOOT_TABLE, lootTableId));
@@ -285,6 +323,7 @@ public class GachaMachineBlock extends Block {
             System.err.println("Loot table not found: " + lootTableId);
             return ItemStack.EMPTY;
         }
+
 
         List<ItemStack> generatedLoot = lootTable.generateLoot(parameters);
 
@@ -296,15 +335,45 @@ public class GachaMachineBlock extends Block {
         return generatedLoot.getFirst();
     }
 
-    private void updateLevel(World world, BlockPos pos, BlockState state, int newLevel) {
-        DoubleBlockHalf half = state.get(HALF);
-        BlockPos otherHalfPos = (half == DoubleBlockHalf.LOWER) ? pos.up() : pos.down();
-        BlockState otherHalfState = world.getBlockState(otherHalfPos);
 
-        if (otherHalfState.isOf(this) && otherHalfState.get(HALF) != half) {
-            world.setBlockState(pos, state.with(LEVEL, newLevel), 3);
-            world.setBlockState(otherHalfPos, otherHalfState.with(LEVEL, newLevel), 3);
-        }
+
+
+
+    @Override
+    public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new GachaMachineBlockEntity(pos, state);
     }
 
+    @Override
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (!world.isClient && (player.isCreative() || !player.canHarvest(state))) {
+            onBreakInCreative(world, pos, state, player);
+        }
+
+        return super.onBreak(world, pos, state, player);
+    }
+
+    protected static void onBreakInCreative(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        DoubleBlockHalf doubleBlockHalf = (DoubleBlockHalf)state.get(HALF);
+        if (doubleBlockHalf == DoubleBlockHalf.UPPER) {
+            BlockPos blockPos = pos.down();
+            BlockState blockState = world.getBlockState(blockPos);
+            if (blockState.isOf(state.getBlock()) && blockState.get(HALF) == DoubleBlockHalf.LOWER) {
+                BlockState blockState2 = blockState.getFluidState().isOf(Fluids.WATER) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
+                world.setBlockState(blockPos, blockState2, 35);
+                world.syncWorldEvent(player, 2001, blockPos, Block.getRawIdFromState(blockState));
+            }
+        }
+
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return null;
+    }
+
+    @Override
+    protected BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "gachamachine:capsule",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+       
+      ]
+    }
+  ],
+  "random_sequences": "gachamachine:gacha_capsules"
+}
+

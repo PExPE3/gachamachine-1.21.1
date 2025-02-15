@@ -8,7 +8,5 @@ public class GachaMachineClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		BlockRenderLayerMap.INSTANCE.putBlock(GachaMachine.GACHA_MACHINE, RenderLayer.getTranslucent());
-
-		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
 	}
 }
