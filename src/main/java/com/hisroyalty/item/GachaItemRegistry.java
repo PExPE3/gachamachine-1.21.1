@@ -11,7 +11,6 @@ import net.minecraft.util.Rarity;
 
 public class GachaItemRegistry {
     public static final BlockItem GACHA_MACHINE = register("gacha_machine", new BlockItem(GachaMachine.GACHA_MACHINE, new Item.Settings()));
-    // gacha machine 2, 3, 4... 10
     public static final BlockItem GACHA_MACHINE_2 = register("gacha_machine_2", new BlockItem(GachaMachine.GACHA_MACHINE_2, new Item.Settings()));
     public static final BlockItem GACHA_MACHINE_3 = register("gacha_machine_3", new BlockItem(GachaMachine.GACHA_MACHINE_3, new Item.Settings()));
     public static final BlockItem GACHA_MACHINE_4 = register("gacha_machine_4", new BlockItem(GachaMachine.GACHA_MACHINE_4, new Item.Settings()));
@@ -24,32 +23,28 @@ public class GachaItemRegistry {
 
 
 
-
-
-    public static final CapsuleItem BASIC_CAPSULE = register("basic_capsule", new CapsuleItem(new Item.Settings()));
-    /*
-    basic capsule
-    wooden capsule
-    copper capsule
-    stone capsule
-    gold capsule
-    lapis capsule
-    iron capsule
-    diamond capsule
-    emerald capsule
-    netherite capsule
-            */
-    public static final CapsuleItem WOODEN_CAPSULE = register("wooden_capsule", new CapsuleItem(new Item.Settings()));
-    public static final CapsuleItem COPPER_CAPSULE = register("copper_capsule", new CapsuleItem(new Item.Settings()));
-    public static final CapsuleItem STONE_CAPSULE = register("stone_capsule", new CapsuleItem(new Item.Settings()));
-    public static final CapsuleItem GOLD_CAPSULE = register("gold_capsule", new CapsuleItem(new Item.Settings()));
-    public static final CapsuleItem LAPIS_CAPSULE = register("lapis_capsule", new CapsuleItem(new Item.Settings()));
-    public static final CapsuleItem IRON_CAPSULE = register("iron_capsule", new CapsuleItem(new Item.Settings()));
-    public static final CapsuleItem DIAMOND_CAPSULE = register("diamond_capsule", new CapsuleItem(new Item.Settings()));
-    public static final CapsuleItem EMERALD_CAPSULE = register("emerald_capsule", new CapsuleItem(new Item.Settings()));
-    public static final CapsuleItem NETHERITE_CAPSULE = register("netherite_capsule", new CapsuleItem(new Item.Settings()));
+    public static final CapsuleItem WOODEN_CAPSULE = register("capsule_a1", new CapsuleItem(new Item.Settings()));
+    public static final CapsuleItem STONE_CAPSULE = register("capsule_a2", new CapsuleItem(new Item.Settings()));
+    public static final CapsuleItem COPPER_CAPSULE = register("capsule_a3", new CapsuleItem(new Item.Settings()));
+    public static final CapsuleItem IRON_CAPSULE = register("capsule_a4", new CapsuleItem(new Item.Settings()));
+    public static final CapsuleItem GOLD_CAPSULE = register("capsule_a5", new CapsuleItem(new Item.Settings()));
+    public static final CapsuleItem LAPIS_CAPSULE = register("capsule_a6", new CapsuleItem(new Item.Settings()));
+    public static final CapsuleItem RUBY_CAPSULE = register("capsule_a7", new CapsuleItem(new Item.Settings()));
+    public static final CapsuleItem EMERALD_CAPSULE = register("capsule_a8", new CapsuleItem(new Item.Settings()));
+    public static final CapsuleItem DIAMOND_CAPSULE = register("capsule_a9", new CapsuleItem(new Item.Settings()));
+    public static final CapsuleItem NETHERITE_CAPSULE = register("capsule_a10", new CapsuleItem(new Item.Settings()));
 
     public static final Item GACHA_COIN = register("gacha_coin", new Item(new Item.Settings().rarity(Rarity.RARE)));
+    public static final Item GACHA_COIN_2 = register("gacha_coin_2", new Item(new Item.Settings().rarity(Rarity.RARE)));
+    public static final Item GACHA_COIN_3 = register("gacha_coin_3", new Item(new Item.Settings().rarity(Rarity.RARE)));
+    public static final Item GACHA_COIN_4 = register("gacha_coin_4", new Item(new Item.Settings().rarity(Rarity.RARE)));
+    public static final Item GACHA_COIN_5 = register("gacha_coin_5", new Item(new Item.Settings().rarity(Rarity.RARE)));
+    public static final Item GACHA_COIN_6 = register("gacha_coin_6", new Item(new Item.Settings().rarity(Rarity.RARE)));
+    public static final Item GACHA_COIN_7 = register("gacha_coin_7", new Item(new Item.Settings().rarity(Rarity.RARE)));
+    public static final Item GACHA_COIN_8 = register("gacha_coin_8", new Item(new Item.Settings().rarity(Rarity.RARE)));
+    public static final Item GACHA_COIN_9 = register("gacha_coin_9", new Item(new Item.Settings().rarity(Rarity.RARE)));
+    public static final Item GACHA_COIN_10 = register("gacha_coin_10", new Item(new Item.Settings().rarity(Rarity.RARE)));
+
 
 
     public static final CapsuleItem CAPSULE_B1 = register("capsule_b1", new CapsuleItem(new Item.Settings()));

@@ -39,5 +39,10 @@ public class GachaMachineBlockEntity extends BlockEntity {
         super.readNbt(nbt, registryLookup);
         level = nbt.getInt("level");
     }
+
+    @Override
+    public boolean supports(BlockState state) {
+        return super.supports(state) || state.isOf(GachaMachine.GACHA_MACHINE) || state.isOf(GachaMachine.GACHA_MACHINE_2) || state.isOf(GachaMachine.GACHA_MACHINE_3) || state.isOf(GachaMachine.GACHA_MACHINE_4) || state.isOf(GachaMachine.GACHA_MACHINE_5) || state.isOf(GachaMachine.GACHA_MACHINE_6) || state.isOf(GachaMachine.GACHA_MACHINE_7) || state.isOf(GachaMachine.GACHA_MACHINE_8) || state.isOf(GachaMachine.GACHA_MACHINE_9) || state.isOf(GachaMachine.GACHA_MACHINE_10);
+    }
 }
 

@@ -1,0 +1,19 @@
+{
+  "type":  "gachamachine:capsule",
+  "pools": [
+    {
+      "conditions": [],
+      "entries": [
+        
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:dirt",
+          "weight": 8
+        }
+      ],
+      "bonus_rolls": 0,
+      "rolls": 1
+    }
+  ],
+  "random_sequences": "gachamachine:gacha_capsules"
+}

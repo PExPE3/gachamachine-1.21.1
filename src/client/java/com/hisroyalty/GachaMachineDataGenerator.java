@@ -30,9 +30,6 @@ public class GachaMachineDataGenerator implements DataGeneratorEntrypoint {
 
 		@Override
 		public void generateItemModels(ItemModelGenerator generator) {
-			//generator.register(GachaItemRegistry.RED_CAPSULE, Models.GENERATED);
-			//generator.register(GachaItemRegistry.GREEN_CAPSULE, Models.GENERATED);
-			//generator.register(GachaItemRegistry.YELLOW_CAPSULE, Models.GENERATED);
 			generator.register(GachaItemRegistry.IRON_CAPSULE, Models.GENERATED);
 			generator.register(GachaItemRegistry.GOLD_CAPSULE, Models.GENERATED);
 			generator.register(GachaItemRegistry.DIAMOND_CAPSULE, Models.GENERATED);

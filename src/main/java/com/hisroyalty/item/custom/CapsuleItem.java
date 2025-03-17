@@ -62,7 +62,6 @@ public class CapsuleItem extends Item {
                 .add(LootContextParameters.ORIGIN, pos)
                 .addOptional(LootContextParameters.THIS_ENTITY, user)
                 .build(GachaMachine.CAPSULE_LOOT_CONTEXT);
-//        Identifier lootTableId = Identifier.of(MOD_ID, "gacha_machine");
         LootTable lootTable = world.getServer()
                 .getReloadableRegistries()
                 .getLootTable(RegistryKey.of(RegistryKeys.LOOT_TABLE, getLootTableId()));
