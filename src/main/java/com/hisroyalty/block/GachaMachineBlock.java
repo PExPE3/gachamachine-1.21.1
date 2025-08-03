@@ -172,7 +172,6 @@ public class GachaMachineBlock extends BlockWithEntity {
             return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
         }
 
-
         if (!isValidItem(stack, world)) {
             StringBuilder itemNames = new StringBuilder();
             List<RegistryEntry<Item>> currencyItems = Registries.ITEM.getOrCreateEntryList(currencyTag).stream().toList();
@@ -195,7 +194,6 @@ public class GachaMachineBlock extends BlockWithEntity {
                     Text.literal(itemNames.toString()).styled(style -> style.withColor(Formatting.RED))
             ).styled(style -> style.withColor(Formatting.RED));
 
-            // Here
             if (hand == Hand.MAIN_HAND && !player.getWorld().isClient) {
                 player.sendMessage(message, message.getString().length() <= 128);
             }
@@ -208,41 +206,39 @@ public class GachaMachineBlock extends BlockWithEntity {
             if (currentLevel < (deserializeLevel(configProperty) - 1)) {
                 gachaMachineBlockEntity.setLevel(currentLevel + 1);
 
-
-                Text text = Text.literal("[").append(Text.of(String.valueOf(currentLevel+1))).append(Text.of("/")).append(Text.of(String.valueOf(deserializeLevel(configProperty)))).append(Text.of("]"));
+                Text text = Text.literal("[").append(Text.of(String.valueOf(currentLevel + 1)))
+                        .append(Text.of("/")).append(Text.of(String.valueOf(deserializeLevel(configProperty))))
+                        .append(Text.of("]"));
                 if (!world.isClient()) player.sendMessage(text, true);
-
-
-
 
                 if (!player.isCreative()) {
                     stack.decrement(1);
                 }
 
                 SoundEvent soundEvent = SoundEvents.BLOCK_CHAIN_STEP;
-
                 world.playSound(null, pos, soundEvent, SoundCategory.BLOCKS, 1.0F, 1.0F);
             } else {
                 if (!world.isClient) {
                     List<ItemStack> capsules = getOutput(player);
                     Direction direction = state.get(FACING);
-
                     BlockPos spawnPos = pos;
                     if (state.get(HALF) == DoubleBlockHalf.UPPER) {
                         spawnPos = pos.down();
                     }
-
                     double offsetX = direction.getOffsetX() * 0.5;
                     double offsetZ = direction.getOffsetZ() * 0.5;
 
+                    if (!player.isCreative()) {
+                        stack.decrement(1);
+                    }
 
                     for (ItemStack capsule : capsules) {
                         if (capsule.getCount() > 1) {
                             Random random = new Random();
                             int messageIndex = random.nextInt(4) + 1;
-                            Text message = Text.translatable("message.gacha_machine.multiple_rewards_" + messageIndex, Text.of(capsule.getItem().getName()))
+                            Text message = Text.translatable("message.gacha_machine.multiple_rewards_" + messageIndex,
+                                            Text.of(capsule.getItem().getName()))
                                     .styled(style -> style.withColor(Formatting.GOLD));
-
                             player.sendMessage(message, false);
                         }
                         ItemEntity capsuleEntity = new ItemEntity(
@@ -252,21 +248,14 @@ public class GachaMachineBlock extends BlockWithEntity {
                                 spawnPos.getZ() + 0.5 + offsetZ,
                                 capsule
                         );
-
                         capsuleEntity.setVelocity(
                                 direction.getOffsetX() * 0.2,
                                 0.0,
                                 direction.getOffsetZ() * 0.2
                         );
-
                         world.spawnEntity(capsuleEntity);
-                        stack.decrement(1);
-
-
                     }
-
                     gachaMachineBlockEntity.setLevel(0);
-
                     world.playSound(null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 }
             }
@@ -274,6 +263,7 @@ public class GachaMachineBlock extends BlockWithEntity {
         }
         return ItemActionResult.FAIL;
     }
+
 
     @Override
     public boolean hasComparatorOutput(BlockState state) {

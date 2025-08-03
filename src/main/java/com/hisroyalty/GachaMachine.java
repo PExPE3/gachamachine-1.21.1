@@ -4,6 +4,7 @@ import com.hisroyalty.block.GachaMachineBlock;
 import com.hisroyalty.block.GachaMachineBlockEntity;
 import com.hisroyalty.config.DatapackConfig;
 import com.hisroyalty.item.GachaItemRegistry;
+import com.hisroyalty.loot.ModLootTypes;
 import com.hisroyalty.mixin.LootContextTypesAccessor;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -219,6 +220,7 @@ public class GachaMachine implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		GachaItemRegistry.init();
+		ModLootTypes.register();
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new DatapackConfig());
 	}
 
